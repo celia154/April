@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>蔚宇&寰宇数据看板</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .board {
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        table {
+            border-collapse: collapse;
+            width: 48%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007ACC;
+            color: white;
+        }
+        td {
+            background-color: #e9f5ff;
+        }
+        #chart1 {
+            width: 48%;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="board">
+ <!-- 第一个板块：蔚宇咨询国家分布 -->
+<div class="board">
+  <div class="section-title">蔚宇咨询国家分布（总计82）</div>
+  <div class="flex-container">
+    <!-- 左边表格 -->
+    <div style="width:48%;">
+      <table border="1" style="width:100%;text-align:center;">
+        <thead>
+          <tr>
+            <th>北美洲</th>
+            <th>南美洲</th>
+            <th>欧洲</th>
+            <th>亚洲（除中东）</th>
+            <th>中东</th>
+            <th>大洋洲</th>
+            <th>非洲</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>美国 18</td>
+            <td>巴西 3</td>
+            <td>法国 4</td>
+            <td>日本 3</td>
+            <td>伊拉克 1</td>
+            <td>澳大利亚 2</td>
+            <td>加纳 1</td>
+          </tr>
+          <tr>
+            <td>加拿大 3</td>
+            <td>乌拉圭 1</td>
+            <td>英国 2</td>
+            <td>菲律宾 3</td>
+            <td>卡塔尔 1</td>
+            <td></td>
+            <td>南非 1</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>白俄罗斯 2</td>
+            <td>缅甸 1</td>
+            <td>阿曼 1</td>
+            <td></td>
+            <td>埃塞俄比亚 2</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>德国 1</td>
+            <td>中国 1</td>
+            <td>阿联酋 3</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>乌克兰 2</td>
+            <td>新加坡 3</td>
+            <td>科威特 1</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>比利时 1</td>
+            <td>泰国 4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>意大利 1</td>
+            <td>中国香港 3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>丹麦 2</td>
+            <td>印度尼西亚 2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>荷兰 1</td>
+            <td>巴基斯坦 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>匈牙利 1</td>
+            <td>印度 3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>希腊 1</td>
+            <td>格鲁吉亚 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>罗马尼亚 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 右边饼图 -->
+    <div id="chart1_pie" style="width:48%;height:400px;"></div>
+  </div>
+</div>
+
+<script>
+var chart1_pie = echarts.init(document.getElementById('chart1_pie'));
+var option1 = {
+    tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+    legend: { bottom: 0 },
+    series: [
+        {
+            name: '洲占比',
+            type: 'pie',
+            radius: '55%',
+            data: [
+                { value: 21, name: '北美洲' },
+                { value: 4, name: '南美洲' },
+                { value: 18, name: '欧洲' },
+                { value: 23, name: '亚洲' },
+                { value: 7, name: '中东' },
+                { value: 2, name: '大洋洲' },
+                { value: 4, name: '非洲' }
+            ],
+            label: { show: true, formatter: '{b}: {d}%' },
+            emphasis: { scale: true, focus: 'self' }
+        }
+    ]
+};
+chart1_pie.setOption(option1);
+chart1_pie.on('click', function (params) {
+    chart1_pie.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+
+</body>
+</html>
+<div class="board">
+<!-- 第二个板块：寰宇咨询国家分布 -->
+<div class="board">
+  <div class="section-title">寰宇咨询国家分布（总计）</div>
+  <div class="flex-container">
+    <div style="width:48%;">
+      <table border="1" style="width:100%;text-align:center;">
+        <thead>
+          <tr>
+            <th>北美洲</th>
+            <th>南美洲</th>
+            <th>欧洲</th>
+            <th>亚洲（除中东）</th>
+            <th>中东</th>
+            <th>大洋洲</th>
+            <th>非洲</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>美国 5</td>
+            <td>多米尼加 2</td>
+            <td>德国 2</td>
+            <td>中国香港 1</td>
+            <td>约旦 1</td>
+            <td>0</td>
+            <td>埃塞俄比亚 2</td>
+          </tr>
+          <tr>
+            <td>墨西哥 1</td>
+            <td>哥伦比亚 2</td>
+            <td>俄罗斯 1</td>
+            <td>泰国 1</td>
+            <td>阿富汗 1</td>
+            <td></td>
+            <td>赞比亚 1</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>巴西 2</td>
+            <td>西班牙 1</td>
+            <td>中国 1</td>
+            <td>阿曼 1</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>爱尔兰 1</td>
+            <td>印尼 1</td>
+            <td>沙特阿拉伯 1</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>保加利亚 1</td>
+            <td>柬埔寨 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>英国 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>法国 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>比利时 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>瑞典 1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="chart2_pie" style="width:48%;height:400px;"></div>
+  </div>
+</div>
+
+<script>
+var chart2_pie = echarts.init(document.getElementById('chart2_pie'));
+var option2 = {
+    tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
+    legend: { bottom: 0 },
+    series: [
+        {
+            name: '洲占比',
+            type: 'pie',
+            radius: '55%',
+            data: [
+                { value: 6, name: '北美洲' },
+                { value: 6, name: '南美洲' },
+                { value: 10, name: '欧洲' },
+                { value: 5, name: '亚洲' },
+                { value: 4, name: '中东' },
+                { value: 0, name: '大洋洲' },
+                { value: 3, name: '非洲' }
+            ],
+            label: { show: true, formatter: '{b}: {d}%' },
+            emphasis: { scale: true, focus: 'self' }
+        }
+    ]
+};
+chart2_pie.setOption(option2);
+chart2_pie.on('click', function (params) {
+    chart2_pie.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+<!-- 第三个板块：客户等级包含关系 -->
+<div class="board">
+  <div class="section-title">蔚宇 vs 寰宇 客户等级包含关系</div>
+  <div class="flex-container">
+    <!-- 蔚宇：双圆环图 -->
+    <div id="chart3_ring1" style="width:48%;height:400px;"></div>
+    <!-- 寰宇：单圆环图 -->
+    <div id="chart3_ring2" style="width:48%;height:400px;"></div>
+  </div>
+</div>
+
+<!-- 蔚宇双圆环图 -->
+<script>
+var chart3_ring1 = echarts.init(document.getElementById('chart3_ring1'));
+var option3_ring1 = {
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    legend: { bottom: 0 },
+    series: [
+        {
+            name: '外圈',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            label: { show: true, position: 'outside', formatter: '{b}: {d}%' },
+            data: [
+                { value: 34+7+23+0, name: 'L1+' },
+                { value: 18, name: 'L0' }
+            ]
+        },
+        {
+            name: '内圈',
+            type: 'pie',
+            radius: ['30%', '50%'],
+            label: { show: true, position: 'inside', formatter: '{b}: {d}%' },
+            data: [
+                { value: 34, name: 'L1' },
+                { value: 7, name: 'L2' },
+                { value: 23, name: 'L3' },
+                { value: 0, name: 'L4' }
+            ]
+        }
+    ]
+};
+chart3_ring1.setOption(option3_ring1);
+chart3_ring1.on('click', function (params) {
+    chart3_ring1.dispatchAction({
+        type: 'highlight',
+        seriesIndex: params.seriesIndex,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+<!-- 寰宇单圆环图 -->
+<script>
+var chart3_ring2 = echarts.init(document.getElementById('chart3_ring2'));
+var option3_ring2 = {
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    legend: { bottom: 0 },
+    series: [
+        {
+            name: '寰宇客户等级',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            label: { show: true, formatter: '{b}: {d}%' },
+            data: [
+                { value: 17, name: 'L1+' },
+                { value: 20, name: 'L0' }
+            ]
+        }
+    ]
+};
+chart3_ring2.setOption(option3_ring2);
+chart3_ring2.on('click', function (params) {
+    chart3_ring2.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+<div class="board">
+    <div class="section-title">咨询产品分布</div>
+    <div class="flex-container">
+        <!-- 蔚宇 产品 -->
+        <div id="chart4_left" style="width:48%; height:400px;"></div>
+
+        <!-- 寰宇 产品 -->
+        <div id="chart4_right" style="width:48%; height:400px;"></div>
+    </div>
+</div>
+
+<script>
+    var chart4_left = echarts.init(document.getElementById('chart4_left'));
+    chart4_left.setOption({
+        title: { text: '蔚宇咨询产品分布', left: 'center' },
+        tooltip: {},
+        xAxis: {
+            type: 'category',
+            data: ['Ampax', 'NEXUS', 'Swift', 'Vision', 'Hub']
+        },
+        yAxis: { type: 'value' },
+        series: [{
+            type: 'bar',
+            label: { show: true, position: 'top' },
+            data: [28, 16, 11, 6, 3]
+        }]
+    });
+
+    var chart4_right = echarts.init(document.getElementById('chart4_right'));
+    chart4_right.setOption({
+        title: { text: '寰宇咨询产品分布', left: 'center' },
+        tooltip: {},
+        xAxis: {
+            type: 'category',
+            data: ['Hub', 'Swift', 'Ampax', 'Mini', 'Sonic']
+        },
+        yAxis: { type: 'value' },
+        series: [{
+            type: 'bar',
+            label: { show: true, position: 'top' },
+            data: [11, 11, 6, 3, 3]
+        }]
+    });
+</script>
+<!-- 第五个板块：产品ID咨询分布（极坐标图） -->
+<div class="board">
+  <div class="section-title">蔚宇 vs 寰宇 产品ID咨询分布</div>
+  <div class="flex-container">
+    <!-- 左：蔚宇 -->
+    <div id="chart5_polar1" style="width:48%;height:400px;"></div>
+    <!-- 右：寰宇 -->
+    <div id="chart5_polar2" style="width:48%;height:400px;"></div>
+  </div>
+</div>
+
+<!-- 蔚宇极坐标图 -->
+<script>
+var chart5_polar1 = echarts.init(document.getElementById('chart5_polar1'));
+var option5_polar1 = {
+    angleAxis: {
+        type: 'category',
+        data: [
+            '1600710941994 (NEXUS)',
+            '1600091201336 (Swift)',
+            '1600977589337 (Ampax)'
+        ]
+    },
+    radiusAxis: {},
+    polar: {},
+    tooltip: { trigger: 'item', formatter: '{b}: {c}' },
+    series: [{
+        type: 'bar',
+        data: [13, 5, 4],
+        coordinateSystem: 'polar',
+        label: {
+            show: true,
+            position: 'middle',
+            formatter: '{c}'
+        },
+        emphasis: {
+            focus: 'series'
+        }
+    }],
+    legend: { show: false }
+};
+chart5_polar1.setOption(option5_polar1);
+chart5_polar1.on('click', function(params) {
+    chart5_polar1.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+<!-- 寰宇极坐标图 -->
+<script>
+var chart5_polar2 = echarts.init(document.getElementById('chart5_polar2'));
+var option5_polar2 = {
+    angleAxis: {
+        type: 'category',
+        data: [
+            '1601371006939 (Hub)',
+            '1600866821408 (Sonic)'
+        ]
+    },
+    radiusAxis: {},
+    polar: {},
+    tooltip: { trigger: 'item', formatter: '{b}: {c}' },
+    series: [{
+        type: 'bar',
+        data: [8, 3],
+        coordinateSystem: 'polar',
+        label: {
+            show: true,
+            position: 'middle',
+            formatter: '{c}'
+        },
+        emphasis: {
+            focus: 'series'
+        }
+    }],
+    legend: { show: false }
+};
+chart5_polar2.setOption(option5_polar2);
+chart5_polar2.on('click', function(params) {
+    chart5_polar2.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0,
+        dataIndex: params.dataIndex
+    });
+});
+</script>
+
+<div class="board">
+    <div class="section-title">客户等级与询盘效果关系</div>
+    <div class="flex-container">
+        <!-- 蔚宇 等级效果 -->
+        <div id="chart6_left" style="width:48%; height:400px;"></div>
+
+        <!-- 寰宇 等级效果 -->
+        <div id="chart6_right" style="width:48%; height:400px;"></div>
+    </div>
+</div>
+
+<script>
+    var chart6_left = echarts.init(document.getElementById('chart6_left'));
+    chart6_left.setOption({
+        title: { text: '蔚宇客户等级与效果', left: 'center' },
+        tooltip: { trigger: 'axis' },
+        legend: { top: 30 },
+        xAxis: { type: 'category', data: ['L3', 'L2', 'L1', 'L0'] },
+        yAxis: [
+            { type: 'value', name: '数量' },
+            { type: 'value', name: '有效占比', axisLabel: { formatter: '{value}%' } }
+        ],
+        series: [
+            {
+                name: '总数',
+                type: 'bar',
+                data: [23, 7, 34, 18],
+                label: { show: true, position: 'top' }
+            },
+            {
+                name: '有效数',
+                type: 'bar',
+                data: [21, 5, 13, 2],
+                label: { show: true, position: 'top' }
+            },
+            {
+                name: '有效占比',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [91, 71, 38, 11],
+                label: { 
+                    show: true, 
+                    position: 'top',
+                    formatter: '{c}%' 
+                },
+                smooth: true
+            }
+        ]
+    });
+
+    var chart6_right = echarts.init(document.getElementById('chart6_right'));
+    chart6_right.setOption({
+        title: { text: '寰宇客户等级与效果', left: 'center' },
+        tooltip: { trigger: 'axis' },
+        legend: { top: 30 },
+        xAxis: { type: 'category', data: ['L1+', 'L0'] },
+        yAxis: [
+            { type: 'value', name: '数量' },
+            { type: 'value', name: '有效占比', axisLabel: { formatter: '{value}%' } }
+        ],
+        series: [
+            {
+                name: '总数',
+                type: 'bar',
+                data: [17, 20],
+                label: { show: true, position: 'top' }
+            },
+            {
+                name: '有效数',
+                type: 'bar',
+                data: [13, 9],
+                label: { show: true, position: 'top' }
+            },
+            {
+                name: '有效占比',
+                type: 'line',
+                yAxisIndex: 1,
+                data: [76, 45],
+                label: { 
+                    show: true, 
+                    position: 'top',
+                    formatter: '{c}%' 
+                },
+                smooth: true
+            }
+        ]
+    });
+</script>
+<script>
+    document.querySelectorAll('.counter').forEach(item => {
+        let target = +item.getAttribute('data-target');
+        let count = 0;
+        let step = target / 100;
+        function update() {
+            count += step;
+            if (count >= target) {
+                item.innerText = target;
+            } else {
+                item.innerText = Math.floor(count);
+                requestAnimationFrame(update);
+            }
+        }
+        update();
+    });
+</script>
